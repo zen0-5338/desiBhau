@@ -15,7 +15,6 @@ class DesiBhauClient(discord.Client):
     async def on_ready(self):
         # seed()
         print('Logged on as {0}!'.format(self.user))
-        print(ADMIN_ID)
 
     ######## MESSAGE PARSING ########
     async def on_message(self, message):
@@ -44,6 +43,10 @@ class DesiBhauClient(discord.Client):
                 elif messageContent.find("nsfw") != -1:
                     self.requireNSFWPermissions = not self.requireNSFWPermissions
                     await message.channel.send("NSFW Channel Required : {}".format(self.requireNSFWPermissions))
+            else:
+                if messageContent.find("shutdown") != -1 or messageContent.find("nsfw") != -1:
+                    await message.channel.send("Nikal laude, pehli fursat me nikal,nahi milne wala tujhe kuch <a:youtried:803206113935753237>")
+                
 
             ###### BOT MENTION PROCESSING #######
             if not message.channel.nsfw and self.requireNSFWPermissions:
@@ -53,7 +56,7 @@ class DesiBhauClient(discord.Client):
             # messageContent += self.curseKeyWords[randint(0,len(self.curseKeyWords)-1)]
             if self.backfire:
 
-                if messageContent.find("gandu") != -1:
+                if messageContent.find("gand") != -1:
                     # print('Message from {0.author}: {0.content}'.format(message))
                     await message.channel.send("<@{0}> , do chapaat marunga to akal aayegi.".format(messageAuthorID))
 
@@ -71,7 +74,7 @@ class DesiBhauClient(discord.Client):
                     await message.channel.send("<@{0}>, tabhi to tu is duniya me aaya.".format(messageAuthorID))
 
                 elif messageContent.find("bc") != -1 or messageContent.find("bhen") != -1:
-                    await message.channel.send("<@{0}>, bhen par mat ja laude. Bahut bura hoga.".format(messageAuthorID))
+                    await message.channel.send("<@{0}>, sidhe teri gaand me danda daalunga.".format(messageAuthorID))
 
                 elif messageContent.find("bsdk") != -1 or messageContent.find("bosd") != -1:
                     await message.channel.send("<@{0}>, loduchand teri gaand faad dunga.".format(messageAuthorID))
