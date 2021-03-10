@@ -39,11 +39,11 @@ class DesiBhauClient(discord.Client):
             if messageContent.find("shutdown") != -1 and str(messageAuthorID) in ADMIN_ID:
                 await message.channel.send("Shutting down...")
                 await self.close()
-                
+
             elif messageContent.find("nsfw") != -1 and str(messageAuthorID) in ADMIN_ID:
                 self.requireNSFWPermissions = not self.requireNSFWPermissions
-                await message.channel.send("NSFW Channel Required : ", self.requireNSFWPermissions)
-
+                await message.channel.send("NSFW Channel Required : {}".format(self.requireNSFWPermissions))
+                
             else:
                 await message.channel.send("Nikal Laude, pehli fursat me nikal, nahi milne wala tujhe kuch.")
 
