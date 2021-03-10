@@ -5,4 +5,4 @@ load_dotenv()
 
 TOKEN = getenv("DISCORD_TOKEN")
 OWNER_ID = getenv("OWNER_ID")
-TARGET_ID = getenv("TARGET_ID")
+ADMIN_ID = getenv("ADMIN_ID").split()

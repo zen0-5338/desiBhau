@@ -1,5 +1,5 @@
 import discord
-from botCredentials import OWNER_ID,TARGET_ID
+from botCredentials import ADMIN_ID, OWNER_ID
 # from random import randint,seed
 
 
@@ -7,7 +7,7 @@ class DesiBhauClient(discord.Client):
 
     curseKeyWords = ["topa", "gandu", 'randi',
                      "chu", "mc", "bc", "bsdk", "lod", "muh"]
-    requireNSFWPermissions = False
+    requireNSFWPermissions = True
     backfire = True
     tagUserFormatStringPC = "<@!{0}>"
     tagUserFormatStringMobile = "<@{0}>"
@@ -15,6 +15,7 @@ class DesiBhauClient(discord.Client):
     async def on_ready(self):
         # seed()
         print('Logged on as {0}!'.format(self.user))
+        print(ADMIN_ID)
 
     ######## MESSAGE PARSING ########
     async def on_message(self, message):
@@ -23,24 +24,28 @@ class DesiBhauClient(discord.Client):
             messageAuthorID = message.author.id
 
             print(messageContent)
-            
+
             botMentioned = bool(
                 message.content.find(
-                self.tagUserFormatStringPC.format(self.user.id)) != -1
+                    self.tagUserFormatStringPC.format(self.user.id)) != -1
                 or
                 message.content.find(
-                self.tagUserFormatStringMobile.format(self.user.id)) != -1
-                )
+                    self.tagUserFormatStringMobile.format(self.user.id)) != -1
+            )
 
             if message.author == self.user or message.author.bot or not botMentioned:
                 return
 
-            if messageContent.find("shutdown") != -1 and str(messageAuthorID) == OWNER_ID:
+            if messageContent.find("shutdown") != -1 and str(messageAuthorID) in ADMIN_ID:
                 await message.channel.send("Shutting down...")
                 await self.close()
+                
+            elif messageContent.find("nsfw") != -1 and str(messageAuthorID) in ADMIN_ID:
+                self.requireNSFWPermissions = not self.requireNSFWPermissions
+                await message.channel.send("NSFW Channel Required : ", self.requireNSFWPermissions)
+
             else:
                 await message.channel.send("Nikal Laude, pehli fursat me nikal, nahi milne wala tujhe kuch.")
-                
 
             ###### BOT MENTION PROCESSING #######
             if not message.channel.nsfw and self.requireNSFWPermissions:
